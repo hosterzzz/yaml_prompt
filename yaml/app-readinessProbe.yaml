@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod 
+metadata: 
+  name: my-app-pod
+  namespace: your-namespace # Replace with your desired namespace 
+spec: 
+  containers: 
+  - name: my-app-container
+image: your-image:latest # Replace with your container image  
+ports:
+- name: http # Name for the port  
+  containerPort: 8080 # The port your application listens on inside   
+  the container   
+readinessProbe:   
+  httpGet: # You can also use tcpSocket or exec based on your needs   
+path: /healthz # Specific path for the readiness check
+port: http # Can be the port number (8080) or the name of the port
+  defined above   
+  initialDelaySeconds: 15 # How long to wait before the first probe   
+  timeoutSeconds: 5# How long to wait for a probe to respond  
+  periodSeconds: 20   # How often to perform the probe
+  failureThreshold: 3  # How many times the probe can fail before 
+  marking the pod as Unready

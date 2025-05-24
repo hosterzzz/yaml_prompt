@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Pod 
+metadata: 
+  name: my-probed-pod 
+  labels: 
+app: my-app   
+spec: 
+  containers: 
+  - name: my-nginx-container  
+image: nginx:latest   
+ports:
+- containerPort: 80   
+readinessProbe:   
+  httpGet:
+path: /   
+port: 80  
+  initialDelaySeconds: 5  # Wait 5 seconds before the first probe 
+  periodSeconds: 10   # Probe every 10 seconds
+  successThreshold: 1 # Consider successful after 1 success   
+  failureThreshold: 3 # Consider failed after 3 failures  
+  timeoutSeconds: 2   # Probe timeout after 2 seconds 
+livenessProbe:
+  httpGet:
+path: /   
+port: 80  
+  initialDelaySeconds: 15 # Wait 15 seconds before the first probe
+  periodSeconds: 20   # Probe every 20 seconds
+  successThreshold: 1 # Consider successful after 1 success   
+  failureThreshold: 3 # Consider failed after 3 failures  
+  timeoutSeconds: 2   # Probe timeout after 2 seconds 
+volumeMounts: 
+- name: my-data-volume  # This name must match a volume defined   
+  below   
+  mountPath: /usr/share/nginx/html/mounted # Path inside the container
+  volumes:
+  - name: my-data-volume# Name of the volume  
+emptyDir: {}  # Using an emptyDir volume for simplicity   
+  # You can replace this with other volume
+  types   
+  # like hostPath, persistentVolumeClaim, etc.
+  
+

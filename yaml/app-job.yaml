@@ -1,0 +1,33 @@
+apiVersion: batch/v1  
+kind: Job 
+metadata: 
+  name: my-gce-job-example
+spec: 
+  template:   
+spec: 
+  restartPolicy: Never # Pod restart policy   
+  containers: 
+  - name: my-job-container
+image: busybox # A small image with shell tools   
+command:  
+  - "/bin/sh" 
+  - "-c"  
+  - > 
+echo "Job started. Writing to PVC mounted at /data on $(date)"
+  > /data/job_output.txt; 
+echo "Content of /data/job_output.txt:" >> /data/job_output.  
+  txt;
+cat /data/job_output.txt >> /data/job_output.txt; 
+sync; 
+echo "Job finished. Final content of /data/job_output.txt:";  
+cat /data/job_output.txt; 
+sleep 10 # Keep container alive for a bit to ensure logs can be seen if needed   
+volumeMounts: 
+- name: job-storage   
+  mountPath: /data # Command will use this mounted space  
+  volumes:
+  - name: job-storage 
+persistentVolumeClaim:
+  claimName: my-job-pvc # Referencing the PVC defined above   
+  backoffLimit: 3 # Number of retries before considering the Job as failed
+

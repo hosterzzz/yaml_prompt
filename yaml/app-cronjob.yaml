@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: my-cronjob
+  labels:
+    app: cronjob-example
+spec:
+  schedule: "{{ .schedule | default '*/5 * * * *' }}"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: cronjob-example
+        spec:
+          containers:
+          - name: my-cronjob-container
+            image: "{{ .image | default 'my-cronjob-image:latest' }}"
+            args:
+            - /bin/sh
+            - -c
+            - "{{ .command | default 'echo Hello from the CronJob!' }}"
+          restartPolicy: "{{ .restartPolicy | default 'OnFailure' }}"
