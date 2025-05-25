@@ -16,7 +16,7 @@ This repository contains parameterized Kubernetes manifests with reusable templa
 | app-resources.yaml | `generate kind pod on namespace spec containers readinessProbe with initialDelaySecond, timeoutSeconds, periodSeconds, failureTrashold and ports name and specific path and resources req and limits in yaml` | Deployment with CPU and memory resource constraints. | [app-resources.yaml](https://github.com/hosterzzz/yaml_prompt/blob/main/yaml/app-resources.yaml) |
 | app-secret-env.yaml | `generate kind pod env specify secretKeyRef and VolumeFrom secertKeyRef in yaml` | Deployment that securely injects sensitive data as environment variables. | [app-secret-env.yaml](https://github.com/hosterzzz/yaml_prompt/blob/main/yaml/app-secret-env.yaml) |
 | app-secret.yaml | `generate kind pod that mount readonly volume with secret in yaml` | Deployment that securely injects sensitive data as environment variables. | [app-secret.yaml](https://github.com/hosterzzz/yaml_prompt/blob/main/yaml/app-secret.yaml)
-| app.yaml | `generate kind pod that contains env volume from configMapKeyRef and mount volume /config and restart policy never and imagePullPolicy - Always` | Basic deployment manifest configmap in pod. | [app.yaml](https://github.com/hosterzzz/yaml_prompt/blob/main/yaml/app-configmap.yaml) |
+| app-configmap.yaml | `generate kind pod that contains env volume from configMapKeyRef and mount volume /config and restart policy never and imagePullPolicy - Always` | Basic deployment manifest configmap in pod. | [app-configmap.yaml](https://github.com/hosterzzz/yaml_prompt/blob/main/yaml/app-configmap.yaml) |
 
 ## Directory Structure
 
@@ -32,5 +32,7 @@ k8s-manifests/
     ├── app-job.yaml
     ├── app-multicontainer.yaml
     ├── app-resources.yaml
-    └── app-secret-env.yaml
+    ├── app-secret-env.yaml
+    ├── app-secret.yaml
+    └── app-configmap.yaml
 ```
