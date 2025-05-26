@@ -32,7 +32,7 @@ volumeMounts:
 - name: my-data-volume  # This name must match a volume defined below   
   mountPath: /usr/share/nginx/html/mounted # Path inside the container
   volumes:
-  - name: my-data-volume# Name of the volume  
+  - name: my-data-volume # Name of the volume  
 emptyDir: {}  # Using an emptyDir volume for simplicity   
   # You can replace this with other volume types   
   # like hostPath, persistentVolumeClaim, etc.
