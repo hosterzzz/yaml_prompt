@@ -29,8 +29,7 @@ port: 80
   failureThreshold: 3 # Consider failed after 3 failures  
   timeoutSeconds: 2   # Probe timeout after 2 seconds 
 volumeMounts: 
-- name: my-data-volume  # This name must match a volume defined   
-  below   
+- name: my-data-volume  # This name must match a volume defined below   
   mountPath: /usr/share/nginx/html/mounted # Path inside the container
   volumes:
   - name: my-data-volume# Name of the volume  
