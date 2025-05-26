@@ -17,10 +17,7 @@ kind: Pod
       volumeMounts:                                                         
         - name: config-volume
           mountPath: "/config"
-      command: ["/bin/sh", "-c", "echo 'Pod initializing...'; printenv      
-  MY_ENV_VAR_FROM_CM; echo 'Mounted volume at /config:'; ls -la /config; echo 
-  'Sleeping for an hour...'; sleep 3600"]                                     
+      command: ["/bin/sh", "-c", "echo 'Pod initializing...'; printenv MY_ENV_VAR_FROM_CM; echo 'Mounted volume at /config:'; ls -la /config; echo 'Sleeping for an hour...'; sleep 3600"]                                     
       volumes:                                                                
-      - name: config-volume     # This name must match the volumeMounts.name  
-  above                                                                       
+      - name: config-volume     # This name must match the volumeMounts.name above                                                                       
         emptyDir: {}  

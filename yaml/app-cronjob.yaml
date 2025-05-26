@@ -1,23 +1,30 @@
-apiVersion: batch/v1
-kind: CronJob
-metadata:
-  name: my-cronjob
-  labels:
-    app: cronjob-example
-spec:
-  schedule: "{{ .schedule | default '*/5 * * * *' }}"
-  jobTemplate:
-    spec:
-      template:
-        metadata:
-          labels:
-            app: cronjob-example
-        spec:
-          containers:
-          - name: my-cronjob-container
-            image: "{{ .image | default 'my-cronjob-image:latest' }}"
-            args:
-            - /bin/sh
-            - -c
-            - "{{ .command | default 'echo Hello from the CronJob!' }}"
-          restartPolicy: "{{ .restartPolicy | default 'OnFailure' }}"
+apiVersion: batch/v1                                                      
+kind: CronJob                                                             
+metadata:                                                                 
+  name: my-pvc-cronjob                                                    
+spec:                                                                     
+  schedule: "*/5 * * * *" # Example: runs every 5 minutes                 
+  jobTemplate:                                                            
+    spec:                                                                 
+      template: # This is the Pod template                                
+        spec:                                                             
+          restartPolicy: Never                                            
+          volumes:                                                        
+            - name: data-storage # An arbitrary name for the volume within the Pod                                                                     
+              persistentVolumeClaim:                                                                                                                                                                           
+                claimName: my-existing-pvc # IMPORTANT: This PVC must exist in your cluster                                                                                                                                                                                            
+          containers:                                                                                                                                                                                          
+            - name: my-processing-container                                                          
+              image: busybox # Using busybox for a simple example         
+              command: ["/bin/sh", "-c"]                                  
+              args:
+                - > # Using YAML multi-line string for readability                                                                                                                                             
+                  echo "CronJob task started at $(date)" > /mnt/mydata/cron_output.log &&                                              
+                  echo "Writing some data to the PVC..." >> /mnt/mydata/cron_output.log &&                                              
+                  df -h /mnt/mydata >> /mnt/mydata/cron_output.log &&     
+                  echo "Content of /mnt/mydata/cron_output.log:" >> /mnt/mydata/cron_output.log &&                                              
+                  cat /mnt/mydata/cron_output.log &&                      
+                  echo "CronJob task finished at $(date)."                
+              volumeMounts:                                               
+                - name: data-storage # Must match the 'name' in the volumes section                                                             
+                  mountPath: /mnt/mydata # The path where the PVC will be mounted inside the container
