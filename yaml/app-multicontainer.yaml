@@ -1,30 +1,31 @@
 apiVersion: v1
-kind: Pod 
-metadata: 
-  name: two-containers-same-volume-pod
-spec: 
+kind: Pod
+metadata:
+  name: two-containers-shared-volume-pod
+spec:
   volumes:
-  - name: shared-data 
-emptyDir: {} # This creates a temporary directory that is shared  
-  between containers  
-  containers: 
-  - name: container-1 
-image: nginx # Replace with your desired image
-volumeMounts: 
-- name: shared-data # This must match the volume name defined above   
-  mountPath: /usr/share/nginx/html/shared # Path where the volume will
-  be mounted in this container
-  - name: container-2 
-image: debian # Replace with your desired image   
-command: ["/bin/sh", "-c"]
-args: 
-  - > 
-while true; do
-  echo "Container 2 writing to shared volume" >>  
-  /data/shared/from_container2.txt;   
-  ls -l /data/shared; 
-  sleep 5;
-done  
-volumeMounts: 
-- name: shared-data # This must match the volume name defined above   
-  mountPath: /data/shared # Path where the volume will be mounted in  this container 
+    - name: shared-data-volume
+      emptyDir: {} # This creates a temporary volume that exists for the life of the Pod
+  containers:
+    - name: container-writer
+      image: busybox
+      command: ["sh", "-c"]
+      args:
+        - echo "Hello from container-writer!" > /shared/message.txt;
+          echo "Writing to shared volume completed.";
+          sleep 10; # Keep the container running for a bit to observe
+      volumeMounts:
+        - name: shared-data-volume
+          mountPath: /shared # Container 1 mounts the volume at /shared
+
+    - name: container-reader
+      image: busybox
+      command: ["sh", "-c"]
+      args:
+        - sleep 5; # Give writer a moment to write
+          echo "Reading from shared volume...";
+          cat /shared/message.txt;
+          echo "Reading from shared volume completed.";
+      volumeMounts:
+        - name: shared-data-volume
+          mountPath: /shared # Container 2 also mounts the volume at /shared
