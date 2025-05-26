@@ -1,23 +1,23 @@
-apiVersion: v1                                                            
-kind: Pod                                                                 
-  metadata:                                                                 
-    name: sample-pod                                                        
-  spec:                                                                     
-    restartPolicy: Never                                                    
-    containers:                                                             
-    - name: sample-container                                                
-      image: busybox:latest                                                 
-      imagePullPolicy: Always                                               
-      env:                                                                  
+apiVersion: v1
+kind: Pod
+  metadata:
+    name: sample-pod
+  spec:
+    restartPolicy: Never
+    containers:
+    - name: sample-container
+      image: busybox:latest
+      imagePullPolicy: Always
+      env:
       - name: MY_ENV_VAR_FROM_CM
-        valueFrom:                                                          
-          configMapKeyRef:                                                  
+        valueFrom:
+          configMapKeyRef:
             name: my-configmap
             key: my-key
-      volumeMounts:                                                         
+      volumeMounts:
         - name: config-volume
           mountPath: "/config"
-      command: ["/bin/sh", "-c", "echo 'Pod initializing...'; printenv MY_ENV_VAR_FROM_CM; echo 'Mounted volume at /config:'; ls -la /config; echo 'Sleeping for an hour...'; sleep 3600"]                                     
-      volumes:                                                                
-      - name: config-volume     # This name must match the volumeMounts.name above                                                                       
-        emptyDir: {}  
+      command: ["/bin/sh", "-c", "echo 'Pod initializing...'; printenv MY_ENV_VAR_FROM_CM; echo 'Mounted volume at /config:'; ls -la /config; echo 'Sleeping for an hour...'; sleep 3600"]
+      volumes:
+      - name: config-volume     # This name must match the volumeMounts.name above
+        emptyDir: {}

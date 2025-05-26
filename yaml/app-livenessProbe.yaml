@@ -1,28 +1,28 @@
 apiVersion: v1
-kind: Pod 
-metadata: 
-  name: my-sample-pod 
+kind: Pod
+metadata:
+  name: my-sample-pod
   namespace: default # Specify your desired namespace here
-spec: 
-  containers: 
+spec:
+  containers:
   - name: my-app-container
-image: nginx:latest # Replace with your container image   
+image: nginx:latest # Replace with your container image
 livenessProbe:
-  httpGet: # Or use tcpSocket or exec 
+  httpGet: # Or use tcpSocket or exec
 path: / # Adjust path for your application
 port: http # Ensure this matches a port name in the ports section or a port number
-  initialDelaySeconds: 15 
-  timeoutSeconds: 5   
-  periodSeconds: 20   
-  failureThreshold: 3 
+  initialDelaySeconds: 15
+  timeoutSeconds: 5
+  periodSeconds: 20
+  failureThreshold: 3
 ports:
-- name: http # Name for the port  
-  containerPort: 80 # The port your application listens on inside the container   
-  protocol: TCP # Optional, defaults to TCP   
-# You can add more ports here 
+- name: http # Name for the port
+  containerPort: 80 # The port your application listens on inside the container
+  protocol: TCP # Optional, defaults to TCP
+# You can add more ports here
 # - name: another-port
-#   containerPort: 8080   
-#   protocol: TCP 
+#   containerPort: 8080
+#   protocol: TCP
 # You can add more containers here
-# - name: another-container   
+# - name: another-container
 #   image: ...
