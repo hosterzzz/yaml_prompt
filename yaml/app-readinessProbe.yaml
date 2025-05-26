@@ -4,7 +4,7 @@ metadata:
   name: my-sample-pod   # Replace with your desired pod name
   namespace: my-namespace  # Replace with your target namespace 
   labels:   
-app: my-app# Optional: Add some labels  
+app: my-app # Optional: Add some labels  
 spec:   
   containers:   
   - name: my-app-container  # Replace with your container name  
@@ -16,22 +16,19 @@ ports:
 readinessProbe: 
   httpGet:  
 path: /ready  # Replace with your readiness probe path  
-port: http # Can be the port name defined above or the   
-  port number   
+port: http # Can be the port name defined above or the port number   
   initialDelaySeconds: 10 # How long to wait before the first probe 
   periodSeconds: 5 # How often to perform the probe  
-  timeoutSeconds: 2   # When the probe times out
+  timeoutSeconds: 2 # When the probe times out
   failureThreshold: 3 # How many times the probe can fail before marking as Unready
-  successThreshold: 1 # How many times the probe must succeed to
-  be marked as Ready
+  successThreshold: 1 # How many times the probe must succeed to be marked as Ready
 livenessProbe:  
   httpGet:  
-path: /live   # Replace with your liveness probe path   
+path: /live # Replace with your liveness probe path   
 port: http # Can be the port name defined above or the port number   
   initialDelaySeconds: 20 # How long to wait before the first probe 
   periodSeconds: 15   # How often to perform the probe  
   timeoutSeconds: 2   # When the probe times out
-  failureThreshold: 3 # How many times the probe can fail before
-  restarting the container  
+  failureThreshold: 3 # How many times the probe can fail before restarting the container  
   successThreshold: 1 # How many times the probe must succeed   
   restartPolicy: Always # Or OnFailure, Never
