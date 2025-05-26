@@ -35,8 +35,7 @@ volumeMounts:
   volumes:
   - name: my-data-volume# Name of the volume  
 emptyDir: {}  # Using an emptyDir volume for simplicity   
-  # You can replace this with other volume
-  types   
+  # You can replace this with other volume types   
   # like hostPath, persistentVolumeClaim, etc.
   
 
