@@ -1,23 +1,35 @@
 apiVersion: v1
 kind: Pod
-  metadata:
-    name: sample-pod
-  spec:
-    restartPolicy: Never
-    containers:
-    - name: sample-container
-      image: busybox:latest
-      imagePullPolicy: Always
-      env:
-      - name: MY_ENV_VAR_FROM_CM
-        valueFrom:
-          configMapKeyRef:
-            name: my-configmap
-            key: my-key
+metadata:
+  name: my-env-config-pod
+spec:
+  volumes:
+    - name: app-config-volume
+      configMap:
+        name: my-app-config # <--- REPLACE WITH YOUR CONFIGMAP NAME
+  containers:
+    - name: my-app-container
+      image: busybox # Or your application image
+      imagePullPolicy: Always # <--- Image pull policy
+      command: ["sh", "-c"]
+      args:
+        - echo "My custom greeting: $APP_GREETING";
+          echo "Value from config file:";
+          cat /config/app-settings.conf; # <--- Reading from mounted config volume
+          sleep 3600; # Keep the container running
+      env: # <--- Environment variables
+        - name: APP_GREETING
+          valueFrom:
+            configMapKeyRef:
+              name: my-app-config     # <--- REPLACE WITH YOUR CONFIGMAP NAME
+              key: greeting_message   # <--- The key in the ConfigMap to use for APP_GREETING
+        - name: ANOTHER_ENV_VAR
+          valueFrom:
+            configMapKeyRef:
+              name: my-app-config     # <--- REPLACE WITH YOUR CONFIGMAP NAME
+              key: another_value      # <--- Another key from the ConfigMap
       volumeMounts:
-        - name: config-volume
-          mountPath: "/config"
-      command: ["/bin/sh", "-c", "echo 'Pod initializing...'; printenv MY_ENV_VAR_FROM_CM; echo 'Mounted volume at /config:'; ls -la /config; echo 'Sleeping for an hour...'; sleep 3600"]
-      volumes:
-      - name: config-volume     # This name must match the volumeMounts.name above
-        emptyDir: {}
+        - name: app-config-volume
+          mountPath: /config # <--- Mount the ConfigMap volume at /config
+          readOnly: true # <--- It's good practice to mount ConfigMaps as read-only
+  restartPolicy: Never # <--- Restart policy for the Pod
