@@ -12,8 +12,8 @@ ports:
 - containerPort: 80
 readinessProbe:
   httpGet:
-path: /
-port: 80
+  path: /
+  port: 80
   initialDelaySeconds: 5  # Wait 5 seconds before the first probe
   periodSeconds: 10   # Probe every 10 seconds
   successThreshold: 1 # Consider successful after 1 success
@@ -21,8 +21,8 @@ port: 80
   timeoutSeconds: 2   # Probe timeout after 2 seconds
 livenessProbe:
   httpGet:
-path: /
-port: 80
+  path: /
+  port: 80
   initialDelaySeconds: 15 # Wait 15 seconds before the first probe
   periodSeconds: 20   # Probe every 20 seconds
   successThreshold: 1 # Consider successful after 1 success

@@ -15,8 +15,8 @@ ports:
   protocol: TCP
 readinessProbe:
   httpGet:
-path: /ready  # Replace with your readiness probe path
-port: http # Can be the port name defined above or the port number
+  path: /ready  # Replace with your readiness probe path
+  port: http # Can be the port name defined above or the port number
   initialDelaySeconds: 10 # How long to wait before the first probe
   periodSeconds: 5 # How often to perform the probe
   timeoutSeconds: 2 # When the probe times out
@@ -24,8 +24,8 @@ port: http # Can be the port name defined above or the port number
   successThreshold: 1 # How many times the probe must succeed to be marked as Ready
 livenessProbe:
   httpGet:
-path: /live # Replace with your liveness probe path
-port: http # Can be the port name defined above or the port number
+  path: /live # Replace with your liveness probe path
+  port: http # Can be the port name defined above or the port number
   initialDelaySeconds: 20 # How long to wait before the first probe
   periodSeconds: 15   # How often to perform the probe
   timeoutSeconds: 2   # When the probe times out

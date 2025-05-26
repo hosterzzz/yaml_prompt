@@ -23,9 +23,9 @@ spec:
       command: ["sh", "-c"]
       args:
         - sleep 5; # Give writer a moment to write
-          echo "Reading from shared volume...";
-          cat /shared/message.txt;
-          echo "Reading from shared volume completed.";
+        - echo "Reading from shared volume...";
+        - cat /shared/message.txt;
+        - echo "Reading from shared volume completed.";
       volumeMounts:
         - name: shared-data-volume
           mountPath: /shared # Container 2 also mounts the volume at /shared

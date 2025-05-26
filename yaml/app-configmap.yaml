@@ -13,10 +13,8 @@ spec:
       imagePullPolicy: Always # <--- Image pull policy
       command: ["sh", "-c"]
       args:
-        - echo "My custom greeting: $APP_GREETING";
-          echo "Value from config file:";
-          cat /config/app-settings.conf; # <--- Reading from mounted config volume
-          sleep 3600; # Keep the container running
+        - echo "My custom greeting: $APP_GREETING"; echo "Value from config file:"; cat /config/app-settings.conf; # <--- Reading from mounted config volume
+        - sleep 3600; # Keep the container running
       env: # <--- Environment variables
         - name: APP_GREETING
           valueFrom:
