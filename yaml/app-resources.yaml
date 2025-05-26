@@ -15,8 +15,7 @@ ports:
 readinessProbe:   
   httpGet: # Assuming httpGet, common for path-based checks   
 path: /<your-readiness-path> # e.g., /healthz 
-port: <your-port-name-or-number> # Can be the name defined above  
-  (e.g., http) or the port number 
+port: <your-port-name-or-number> # Can be the name defined above (e.g., http) or the port number 
   initialDelaySeconds: <integer_value> # e.g., 5  
   periodSeconds: <integer_value> # e.g., 10   
   timeoutSeconds: <integer_value> # e.g., 1   
@@ -24,8 +23,8 @@ port: <your-port-name-or-number> # Can be the name defined above
 resources:
   requests:   
 memory: "<memory_request_value>" # e.g., "64Mi"   
-cpu: "<cpu_request_value>"# e.g., "250m"  
+cpu: "<cpu_request_value>" # e.g., "250m"  
   limits: 
 memory: "<memory_limit_value>" # e.g., "128Mi"
-cpu: "<cpu_limit_value>"# e.g., "500m"
+cpu: "<cpu_limit_value>" # e.g., "500m"
 
