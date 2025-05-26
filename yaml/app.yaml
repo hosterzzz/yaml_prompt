@@ -11,8 +11,7 @@ spec:
 image: nginx:latest # You can replace this with your desired image
 ports:
 - name: http # Optional: give a name to the port  
-  containerPort: 80 # The port your application listens on inside the 
-  container   
+  containerPort: 80 # The port your application listens on inside the container   
   protocol: TCP # The protocol (TCP or UDP)   
 # You can add more ports here if needed   
 # - name: https   
