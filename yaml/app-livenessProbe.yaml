@@ -10,16 +10,14 @@ image: nginx:latest # Replace with your container image
 livenessProbe:
   httpGet: # Or use tcpSocket or exec 
 path: / # Adjust path for your application
-port: http # Ensure this matches a port name in the ports section 
-  or a port number
+port: http # Ensure this matches a port name in the ports section or a port number
   initialDelaySeconds: 15 
   timeoutSeconds: 5   
   periodSeconds: 20   
   failureThreshold: 3 
 ports:
 - name: http # Name for the port  
-  containerPort: 80 # The port your application listens on inside the 
-  container   
+  containerPort: 80 # The port your application listens on inside the container   
   protocol: TCP # Optional, defaults to TCP   
 # You can add more ports here 
 # - name: another-port
